@@ -7,7 +7,9 @@ def arithmetic_arranger(problems,reveal=False):
   
   for i in problems:
     for j in i:
-      if j not in "0987654321+- ":
+      if j in "%/*":
+        return "Error: Operator must be '+' or '-'."
+      elif j not in "0987654321+- ":
         return "Error: Numbers must only contain digits."
 
   for i in problems:                                          # Check for +/- and form topList, bottomList and answer lists
@@ -19,8 +21,6 @@ def arithmetic_arranger(problems,reveal=False):
     elif "-" in i:
       individual = i.split("-")
       operatorList.append("-")
-    else:
-      return "Error: Operator must be '+' or '-'."
     
     if (abs(int(individual[0].strip())) or abs(int(individual[1].strip()))) > 9999:
       return "Error: Numbers cannot be more than four digits."
@@ -55,10 +55,15 @@ def arithmetic_arranger(problems,reveal=False):
       ans[i] = " " + ans[i]
 
     spacer = " "*4
-    topString += topList[i] + spacer
-    bottomString += operatorList[i] + bottomList[i] + spacer
-    decorString += decorList[i] + spacer
-    stringAns += ans[i] + spacer
+    topString += topList[i]
+    bottomString += operatorList[i] + bottomList[i]
+    decorString += decorList[i]
+    stringAns += ans[i]
+    if i != len(problems)-1:
+      topString += spacer
+      bottomString += spacer
+      decorString += spacer
+      stringAns += spacer
 
   noAnsFinal = f"{topString}\n{bottomString}\n{decorString}"
   stringAnsFinal = stringAns
